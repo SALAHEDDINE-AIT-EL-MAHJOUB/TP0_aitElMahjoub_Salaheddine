@@ -160,10 +160,14 @@ public class Bb implements Serializable {
             return null;
         }
 
-        /**analyser la question (compte, renverse, reformule)  */
+        /*
+        *analyser la question (compte, renverse, reformule) 
+        */
         analyserQuestion();
 
-        /* Entourer la réponse avec "||"*/
+        /*
+        Entourer la réponse avec "||"
+        */
         this.reponse = "||";
         /**
          * Si la conversation n'a pas encore commencé, ajouter le rôle système au début de la réponse
@@ -184,8 +188,12 @@ public class Bb implements Serializable {
      *
      * @return "index"
      */
+
+     /*
+     reset des résultats d'analyse 
+     */
     public String nouveauChat() {
-        /* reset des résultats d'analyse */
+       
         this.nbCaracteres = 0;
         this.nbCaracteresSansEspaces = 0;
         this.nbMots = 0;
