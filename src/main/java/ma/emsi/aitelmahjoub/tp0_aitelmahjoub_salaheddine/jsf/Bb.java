@@ -163,7 +163,7 @@ public class Bb implements Serializable {
         /**analyser la question (compte, renverse, reformule)  */
         analyserQuestion();
 
-        // Entourer la réponse avec "||".
+        /* Entourer la réponse avec "||"*/
         this.reponse = "||";
         /**
          * Si la conversation n'a pas encore commencé, ajouter le rôle système au début de la réponse
@@ -185,7 +185,7 @@ public class Bb implements Serializable {
      * @return "index"
      */
     public String nouveauChat() {
-        // reset des résultats d'analyse aussi
+        /* reset des résultats d'analyse */
         this.nbCaracteres = 0;
         this.nbCaracteresSansEspaces = 0;
         this.nbMots = 0;
@@ -250,8 +250,9 @@ public class Bb implements Serializable {
         return this.listeRolesSysteme;
     }
 
-    // ----------------- Méthodes d'analyse de texte -----------------
-
+    /*
+    ----------------- Méthodes d'analyse de texte -----------------
+    */
     /**
      * Analyse la valeur de `question` et met à jour les champs:
      * nbCaracteres, nbCaracteresSansEspaces, nbMots, nbVoyelles, chaineRenversee, reformulationCourte.
@@ -271,14 +272,14 @@ public class Bb implements Serializable {
         nbCaracteres = txt.length();
         nbCaracteresSansEspaces = txt.replace(" ", "").length();
 
-        // compter les mots en utilisant les classes Unicode : split sur tout ce qui n'est pas une lettre ou un chiffre
+        /*compter les mots en utilisant les classes Unicode : split sur tout ce qui n'est pas une lettre ou un chiffre*/
         String[] mots = txt.isBlank() ? new String[0] : txt.split("\\P{L}+");
         nbMots = 0;
         for (String m : mots) {
             if (m != null && !m.isBlank()) nbMots++;
         }
 
-        // compter les voyelles (français, accents compris)
+        /* compter les voyelles */
         nbVoyelles = 0;
         String lower = txt.toLowerCase(Locale.FRENCH);
         for (int i = 0; i < lower.length(); i++) {
@@ -286,10 +287,10 @@ public class Bb implements Serializable {
             if (isVoyelle(c)) nbVoyelles++;
         }
 
-        // chaîne renversée (garde tous les caractères)
+        /* chaîne renversée (garde tous les caractères)*/
         chaineRenversee = new StringBuilder(txt).reverse().toString();
 
-        // reformulation courte : première phrase si présente, sinon premiers 12 mots
+        /*reformulation courte : première phrase si présente, sinon premiers 12 mots*/
         reformulationCourte = faireReformulationCourte(txt);
     }
 
@@ -327,14 +328,18 @@ public class Bb implements Serializable {
     private String faireReformulationCourte(String txt) {
         if (txt == null || txt.isBlank()) return "";
 
-        // tenter première phrase
+        /* 
+        tenter première phrase
+        */
         int posPoint = indexOfFirst(txt, '.', '?', '!');
         if (posPoint > 0) {
             String first = txt.substring(0, posPoint + 1).trim();
             return capitalizeFirst(first);
         }
 
-        // sinon, prendre les premiers 12 mots
+        /*
+        sinon, prendre les premiers 12 mots
+        */
         String[] tokens = txt.split("\\P{L}+");
         StringBuilder sb = new StringBuilder();
         int limit = Math.min(tokens.length, 12);
